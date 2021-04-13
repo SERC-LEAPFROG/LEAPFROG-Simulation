@@ -1,0 +1,8 @@
+syntax = "proto2";
+package sensor_msgs.msgs;
+
+message TVCTarget
+{
+  required float   actuator_1_target  = 1;
+  required float   actuator_2_target  = 2;
+}

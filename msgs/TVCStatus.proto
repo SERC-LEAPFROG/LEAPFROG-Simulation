@@ -1,0 +1,15 @@
+syntax = "proto2";
+package sensor_msgs.msgs;
+
+message TVCStatus
+{
+  required float   actuator_status_1  = 1;
+  required float   actuator_target_1  = 2;
+  required float   actuator_current_1  = 3;
+  required float   actuator_velocity_1  = 4;
+
+  required float   actuator_status_2  = 5;
+  required float   actuator_target_2  = 6;
+  required float   actuator_current_2  = 7;
+  required float   actuator_velocity_2  = 8;
+}
