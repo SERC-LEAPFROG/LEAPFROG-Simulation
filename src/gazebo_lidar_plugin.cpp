@@ -116,7 +116,7 @@ void LidarPlugin::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
     lidar_topic_ = parentSensor_->Topic();
   } else {
     // if not set by parameter, get the topic name from the model name
-    lidar_topic_ = parentSensorModelName;
+    lidar_topic_ = "lidar";
     gzwarn << "[gazebo_lidar_plugin]: " + names_splitted.front() + "::" + names_splitted.rbegin()[1] +
       " using lidar topic \"" << parentSensorModelName << "\"\n";
   }
@@ -131,7 +131,7 @@ void LidarPlugin::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
   orientation_.set_w(q_ls.W());
 
   // start lidar topic publishing
-  lidar_pub_ = node_handle_->Advertise<sensor_msgs::msgs::Range>("~/" + names_splitted[0] + "/link/" + lidar_topic_, 10);
+  lidar_pub_ = node_handle_->Advertise<sensor_msgs::msgs::Range>("~/lander/" + lidar_topic_, 10);
 }
 
 /////////////////////////////////////////////////
