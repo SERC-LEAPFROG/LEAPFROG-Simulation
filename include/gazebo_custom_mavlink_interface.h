@@ -221,7 +221,7 @@ private:
   void ImuCallback(ImuPtr& imu_msg);
   void GpsCallback(GpsPtr& gps_msg, const int& id);
   void GroundtruthCallback(GtPtr& groundtruth_msg);
-  void LidarCallback(LidarPtr& lidar_msg, const int& id);
+  void LidarCallback(LidarPtr& lidar_msg);
   void SonarCallback(SonarPtr& sonar_msg, const int& id);
   //void OpticalFlowCallback(OpticalFlowPtr& opticalFlow_msg);
   void IRLockCallback(IRLockPtr& irlock_msg);
@@ -337,6 +337,7 @@ private:
   transport::SubscriberPtr thruster_status_sub_;
   transport::SubscriberPtr tvc_status_sub_;
   transport::SubscriberPtr vehicle_angular_rates_sub_;
+  transport::SubscriberPtr lidar_sub_;
   // ---------------------------------------------------------------------------
 
   // TVC Target publisher
@@ -360,8 +361,9 @@ private:
   std::string roll_pitch_setpoint_sub_topic_;
   std::string new_xy_sub_topic_;
   std::string vehicle_angular_rates_topic_;
-  // ---------------------------------------------------------------------------
   std::string tvc_target_pub_topic_;
+  std::string lidar_sub_topic_;
+  // ---------------------------------------------------------------------------
 
   std::mutex last_imu_message_mutex_ {};
   std::condition_variable last_imu_message_cond_ {};

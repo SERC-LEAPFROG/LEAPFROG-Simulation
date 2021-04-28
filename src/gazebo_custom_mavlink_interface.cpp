@@ -209,6 +209,7 @@ void GazeboMavlinkInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   roll_pitch_setpoint_sub_topic_ = "~/" + model_->GetName() + "/roll_pitch_setpoint";
   thruster_sub_topic_ = "~/" + model_->GetName() + "/thruster_status";
   vehicle_angular_rates_topic_ = "~/" + model_->GetName() + "/vehicle_angular_rates";
+  lidar_sub_topic_ = "~/" + model_->GetName() + "/lidar";
   // ---------------------------------------------------------------------------
   // TVC Target
   tvc_target_pub_topic_ = "~/" + model_->GetName() + "/tvc_target";
@@ -447,13 +448,13 @@ void GazeboMavlinkInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   roll_pitch_setpoint_sub_ = node_handle_->Subscribe(roll_pitch_setpoint_sub_topic_, &GazeboMavlinkInterface::RollPitchSetpointCallback, this);
   thruster_status_sub_ = node_handle_->Subscribe(thruster_sub_topic_, &GazeboMavlinkInterface::ThrusterStatusCallback, this);
   vehicle_angular_rates_sub_ = node_handle_->Subscribe(vehicle_angular_rates_topic_, &GazeboMavlinkInterface::VehicleAngularRatesCallback, this);
+  lidar_sub_ = node_handle_->Subscribe(lidar_sub_topic_, &GazeboMavlinkInterface::LidarCallback, this);
   // ---------------------------------------------------------------------------
 
   // Get the model joints
   auto joints = model_->GetJoints();
 
   // Create subscriptions to the distance sensors
-  CreateSensorSubscription(&GazeboMavlinkInterface::LidarCallback, this, joints, kDefaultLidarModelJointNaming);
   CreateSensorSubscription(&GazeboMavlinkInterface::SonarCallback, this, joints, kDefaultSonarModelJointNaming);
   CreateSensorSubscription(&GazeboMavlinkInterface::GpsCallback, this, joints, kDefaultGPSModelJointNaming);
 
@@ -882,14 +883,14 @@ void GazeboMavlinkInterface::GroundtruthCallback(GtPtr& groundtruth_msg) {
   // the FCU
 }
 
-void GazeboMavlinkInterface::LidarCallback(LidarPtr& lidar_message, const int& id) {
+void GazeboMavlinkInterface::LidarCallback(LidarPtr& lidar_message) {
   mavlink_distance_sensor_t sensor_msg;
   sensor_msg.time_boot_ms = lidar_message->time_usec() / 1e3;   // [ms]
   sensor_msg.min_distance = lidar_message->min_distance() * 100.0;  // [cm]
   sensor_msg.max_distance = lidar_message->max_distance() * 100.0;  // [cm]
   sensor_msg.current_distance = lidar_message->current_distance() * 100.0;  // [cm]
   sensor_msg.type = 0;
-  sensor_msg.id = id;
+  sensor_msg.id = 0;
   sensor_msg.covariance = 0;
   sensor_msg.horizontal_fov = lidar_message->h_fov();
   sensor_msg.vertical_fov = lidar_message->v_fov();
@@ -901,21 +902,13 @@ void GazeboMavlinkInterface::LidarCallback(LidarPtr& lidar_message, const int& i
     lidar_message->orientation().y(),
     lidar_message->orientation().z());
 
-  ignition::math::Quaterniond q_bs;
-  for (Sensor_M::iterator it = sensor_map_.begin(); it != sensor_map_.end(); ++it) {
-    // check the ID of the sensor on the sensor map and apply the respective rotation
-    if (it->second.first == id) {
-      q_bs = (it->second.second * q_ls).Inverse();
-    }
-  }
-
-  sensor_msg.quaternion[0] = q_bs.W();
-  sensor_msg.quaternion[1] = q_bs.X();
-  sensor_msg.quaternion[2] = q_bs.Y();
-  sensor_msg.quaternion[3] = q_bs.Z();
+  sensor_msg.quaternion[0] = q_ls.W();
+  sensor_msg.quaternion[1] = q_ls.X();
+  sensor_msg.quaternion[2] = q_ls.Y();
+  sensor_msg.quaternion[3] = q_ls.Z();
 
   const ignition::math::Vector3d u_Xb = kForwardRotation; // This is unit vector of X-axis `base_link`
-  const ignition::math::Vector3d u_Xs = q_bs.RotateVectorReverse(u_Xb); // This is unit vector of X-axis sensor in `base_link` frame
+  const ignition::math::Vector3d u_Xs = q_ls.RotateVectorReverse(u_Xb); // This is unit vector of X-axis sensor in `base_link` frame
 
   setMavlinkSensorOrientation(u_Xs, sensor_msg);
 
