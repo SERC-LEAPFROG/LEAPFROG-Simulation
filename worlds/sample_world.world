@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version='1.7'>
+  <world name='default'>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- Craters -->
+    <include>
+      <uri>model://crater_1</uri>
+      <name>crater_1</name>
+      <pose>30.8055 -36 .4247 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://crater_2</uri>
+      <name>crater_2</name>
+      <pose>-46.012 -13.3373 -1.011725 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://crater_3</uri>
+      <name>crater_3</name>
+      <pose>-26.2535 -50.1267 -1.220605 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://crater_4</uri>
+      <name>crater_4</name>
+      <pose>34.8184 47.163 -3.05266 0 -0 0</pose>
+    </include>
+    <!-- Obstacles -->
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_1</name>
+      <pose>40.267 -7.80095 -1.082524 -0.044297 0 0</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_2</name>
+      <pose>12.8579 -64.4171 .1442 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_3</name>
+      <pose>-21.1209 -76.2795 -.783344 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_4</name>
+      <pose>-6.57374 -22.4327 -.498239 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_5</name>
+      <pose>-34.5582 26.5645 -1.755536 -0 0.039459 1.59442</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_6</name>
+      <pose>8.06542 23.3547 -1.475  0 0.033746 1.59442</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_7</name>
+      <pose>59.3821 -58.6994 -0.05322 0 -0 1.59442</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_8</name>
+      <pose>-53.0593 -50.3052 -1.235  -0.01179 -0 1.59442</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_9</name>
+      <pose>-70.3835 -15.537 -1.925384 0.042454 0 -1.55624</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_10</name>
+      <pose>62.1809 55.9999 -1.475 0 -0 1.59442</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_11</name>
+      <pose>41.1188 18.4005 -1.1863 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_12</name>
+      <pose>16.1381 74.8414 -2.310085 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>model://obstacle</uri>
+      <name>obstacle_13</name>
+      <pose>13.179484 74.391891 -2.299412 0 -0 0</pose>
+    </include>
+  </world>
+</sdf>

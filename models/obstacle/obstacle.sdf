@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="obstacle">
+    <static>true</static>
+
+    <link name='outer_ring'>
+      <pose>0 0 0 0 0 0</pose>
+      <collision name='outer_ring_collision'>
+        <geometry>
+          <mesh>
+            <uri>model://obstacle/meshes/Aristarchusregionmoon3xv.stl</uri>
+            <scale>0.5 0.5 .5</scale>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <visual name='outer_ring_visual'>
+        <geometry>
+          <mesh>
+            <uri>model://obstacle/meshes/Aristarchusregionmoon3xv.stl</uri>
+            <scale>0.5 0.5 .5</scale>
+          </mesh>
+        </geometry>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+
+      <material>
+        <shader type='pixel'>
+          <normal_map>__default__</normal_map>
+        </shader>
+        <script> <name>ModelPreview_1::crater::outer_ring_visual_MATERIAL_</name>
+          <uri>__default__</uri>
+        </script>
+        <ambient>0.1 0.1 0.1 1</ambient>
+        <diffuse>0.7 0.7 0.7 1</diffuse>
+        <specular>0.2 0.2 0.2 1</specular>
+        <emissive>0 0 0 1</emissive>
+      </material>
+        <transparency>0</transparency>
+        <cast_shadows>1</cast_shadows>
+      </visual>
+    </link>
+  </model>
+</sdf>
