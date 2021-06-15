@@ -1,5 +1,5 @@
 //
-// Created by helkebir on 6/14/21.
+// Created by Hamza El-Kebir on 6/14/21.
 //
 
 #include <gazebo_crater_catalog_plugin.h>
