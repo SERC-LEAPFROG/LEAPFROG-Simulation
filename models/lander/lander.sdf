@@ -2325,6 +2325,9 @@
     <plugin name='tvc_controller' filename='libgazebo_tvc_controller_plugin.so'>
       <robotNamespace/>
     </plugin>
+    <plugin name='crater_catalog_plugin' filename='libgazebo_crater_catalog_plugin.so'>
+      <robotNamespace/>
+    </plugin>
     <!--lidar-->
     <link name="lander/lidar_link">
       <pose>0 0 0 0 0 0</pose>
