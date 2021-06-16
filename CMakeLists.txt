@@ -299,6 +299,7 @@ set(sensor_msgs
   msgs/VehicleAngularRates.proto
   msgs/TVCStatus.proto
   msgs/TVCTarget.proto
+  msgs/Crater.proto
   # ----------------------------------------------------------------------------
   msgs/Airspeed.proto
   msgs/Imu.proto
@@ -337,6 +338,7 @@ add_library(gazebo_contact_plugin SHARED src/gazebo_contact_plugin.cc)
 add_library(gazebo_cg_plugin SHARED src/gazebo_cg_plugin.cpp)
 add_library(gazebo_custom_mavlink_interface SHARED src/gazebo_custom_mavlink_interface.cpp src/mavlink_interface.cpp)
 add_library(gazebo_tvc_controller_plugin SHARED src/gazebo_tvc_controller_plugin.cpp)
+add_library(gazebo_crater_catalog_plugin SHARED src/gazebo_crater_catalog_plugin.cpp)
 # ------------------------------------------------------------------------------
 
 add_library(gazebo_airspeed_plugin SHARED src/gazebo_airspeed_plugin.cpp)
@@ -371,6 +373,7 @@ set(plugins
   gazebo_cg_plugin
   gazebo_custom_mavlink_interface
   gazebo_tvc_controller_plugin
+  gazebo_crater_catalog_plugin
   # ----------------------------------------------------------------------------
 
   gazebo_airspeed_plugin

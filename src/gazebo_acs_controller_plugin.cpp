@@ -84,12 +84,26 @@ void ACSControllerPlugin::Load(physics::ModelPtr _model,
   roll_pitch_pub_topic_ = "~/" + _model->GetName() + "/roll_pitch_status";
   roll_pitch_setpoint_pub_topic_ = "~/" + _model->GetName() + "/roll_pitch_setpoint";
   thruster_pub_topic_ = "~/" + _model->GetName() + "/thruster_status";
+  crater_sub_topic_ = "~/" + _model->GetName() + "/crater_catalog";
 
   // publishers
   new_xy_status_pub_ = node_handle_->Advertise<sensor_msgs::msgs::NewXYStatus>(new_xy_pub_topic_, 10);
   roll_pitch_status_pub_ = node_handle_->Advertise<sensor_msgs::msgs::RollPitchStatus>(roll_pitch_pub_topic_, 10);
   roll_pitch_setpoint_pub_ = node_handle_->Advertise<sensor_msgs::msgs::RollPitchSetpoint>(roll_pitch_setpoint_pub_topic_, 10);
   thruster_status_pub_ = node_handle_->Advertise<sensor_msgs::msgs::ThrusterStatus>(thruster_pub_topic_, 10);
+
+  // subscriber
+  crater_sub_ = node_handle_->Subscribe<sensor_msgs::msgs::Crater>(crater_sub_topic_, &ACSControllerPlugin::craterCallback, this);
+}
+
+void ACSControllerPlugin::craterCallback(CraterMsgPtr &msg)
+{
+    closestCrater_.name = msg->name();
+    closestCrater_.relPos.X(msg->xrel());
+    closestCrater_.relPos.Y(msg->yrel());
+    closestCrater_.relPos.Z(msg->zrel());
+
+    std::cout << "Received crater update: " << closestCrater_.name << "; " << closestCrater_.relPos << std::endl;
 }
 
 void ACSControllerPlugin::Init() {

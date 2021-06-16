@@ -42,9 +42,25 @@
 #include "RollPitchStatus.pb.h"
 #include "RollPitchSetpoint.pb.h"
 #include "ThrusterStatus.pb.h"
+#include "Crater.pb.h"
 // -----------------------------------------------------------------------------
 
 namespace gazebo {
+
+typedef const boost::shared_ptr<const sensor_msgs::msgs::Crater> CraterMsgPtr;
+
+/**
+ * @brief Struct that contains accessible closest crater data.
+ *
+ * @details Contains the name and relative position of the nearest crater. The crater depth can be inferred from the
+ * crater name provided the same naming convention is adhered to as in the sample world.
+ *
+ * Note that in the default configuration, the z-value of \c relaPos will be -1.
+ */
+struct ClosestCrater {
+    std::string name; //! Crater name.
+    ignition::math::Vector3<double> relPos; //! Relative distance to crater (planar vector, z can be ignored by default).
+};
 
 class GAZEBO_VISIBLE ACSControllerPlugin : public ModelPlugin {
 
@@ -59,6 +75,14 @@ private:
   void OnUpdate();
   void handle_control();
   void sendACSStatus();
+  /**
+   * @brief Callback for CraterCatalog messages.
+   *
+   * @details Amends \c closestCrater_ to contain latest nearest crater.
+   *
+   * @param msg Crater message.
+   */
+  void craterCallback(CraterMsgPtr &msg);
 
   physics::ModelPtr _model;
   sdf::ElementPtr _sdf;
@@ -87,12 +111,17 @@ private:
   std::string roll_pitch_pub_topic_;
   std::string roll_pitch_setpoint_pub_topic_;
   std::string thruster_pub_topic_;
+  std::string crater_sub_topic_; // Crater message topic.
 
   // status publishers
   transport::PublisherPtr new_xy_status_pub_;
   transport::PublisherPtr roll_pitch_status_pub_;
   transport::PublisherPtr roll_pitch_setpoint_pub_;
   transport::PublisherPtr thruster_status_pub_;
+
+  transport::SubscriberPtr crater_sub_; //! Crater catalog subscriber.
+
+  ClosestCrater closestCrater_; //! Closest crater struct.
 };
 
 class actuator {

@@ -1,0 +1,9 @@
+syntax = "proto2";
+package sensor_msgs.msgs;
+
+message Crater {
+  required string name = 1;
+  required double xrel = 2;
+  required double yrel = 3;
+  required double zrel = 4;
+}
